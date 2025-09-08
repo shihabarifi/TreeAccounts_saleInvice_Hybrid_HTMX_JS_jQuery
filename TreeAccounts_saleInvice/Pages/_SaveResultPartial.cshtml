@@ -1,0 +1,26 @@
+﻿@model TreeAccounts_saleInvice.Models.AlertViewModel
+<script>
+    Swal.fire({
+        title: '@Html.Raw(Model.Title)',
+        text: '@Html.Raw(Model.Message)',
+        icon: '@Model.Icon',
+    @if (Model.IsToast)
+    {
+        @:toast: true,
+        @:position: '@Model.Position',
+        @:showConfirmButton: false,
+        @:timer: @(Model.Timer ?? 3000),
+        @:timerProgressBar: true,
+    }
+    else
+    {
+        @:confirmButtonText: '@Model.ConfirmButtonText',
+        @if (Model.Timer.HasValue)
+        {
+            @:timer: @Model.Timer,
+        }
+        @:showCancelButton: @Model.ShowCancelButton.ToString().ToLower(),
+        @:cancelButtonText: '@Model.CancelButtonText',
+    }
+        });
+</script>
