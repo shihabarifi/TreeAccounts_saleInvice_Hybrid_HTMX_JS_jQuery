@@ -298,6 +298,8 @@ namespace TreeAccounts_saleInvice.Pages
                         ConfirmButtonText = "موافق",
                         Timer = 3000
                     };
+                    // إعادة تهيئة النموذج بعد الإضافة
+                    NewAccount = new NewAccountModel();
                 }
                 else
                 {
