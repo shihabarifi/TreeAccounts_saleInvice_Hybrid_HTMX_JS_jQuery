@@ -278,7 +278,13 @@ $('#jstree-ajax').on("select_node.jstree", function (e, data) {
 
 
 
-
+// الاستماع لحدث HTMX accountChanged
+document.body.addEventListener("htmx:afterRequest", function (evt) {
+    if (evt.detail.xhr.getResponseHeader("HX-Trigger") === "accountChanged") {
+        console.log("تم تحديث الحساب، إعادة تحميل الشجرة...");
+        $('#jstree-ajax').jstree(true).refresh();
+    }
+});
 
 
 //// =============================================

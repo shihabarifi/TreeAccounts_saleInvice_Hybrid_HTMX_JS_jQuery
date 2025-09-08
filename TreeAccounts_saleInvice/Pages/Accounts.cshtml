@@ -354,23 +354,6 @@
 
     <!-- ملف JavaScript الخاص بالصفحة  -->
     <script src="../js/Accounts.js"></script>
-    <script>
-        // الاستماع لحدث HTMX accountChanged
-        document.body.addEventListener("htmx:afterRequest", function (evt) {
-            const trigger = evt.detail.xhr.getResponseHeader("HX-Trigger");
-            if (trigger === "accountChanged") {
-                console.log("تم تحديث الحساب → تحديث الشجرة والجدول");
 
-                // تحديث jsTree
-                $('#jstree-ajax').jstree(true).refresh();
-
-                // تحديث DataTable
-                const table = $('.datatables-basic').DataTable();
-                table.ajax.reload(null, false); // إعادة تحميل بدون فقدان الصفحة الحالية
-            }
-        });
-
-
-    </script>
  
 }
