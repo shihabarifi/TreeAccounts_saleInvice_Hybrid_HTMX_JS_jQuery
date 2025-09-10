@@ -1,7 +1,7 @@
 ﻿@page "/Accounts"
 @model TreeAccounts_saleInvice.Pages.AccountsModel
 @{
-    ViewData["Title"] = "Accounts"; 
+    ViewData["Title"] = "Accounts";
 }
 
 <style>
@@ -148,11 +148,11 @@
         }
     }
 
- 
+
 
     /* ---------------------------------
-       4. الأيقونات ومؤشر التحميل
-    --------------------------------- */
+           4. الأيقونات ومؤشر التحميل
+        --------------------------------- */
     .htmx-indicator {
         display: none;
         color: #28a745;
@@ -219,7 +219,7 @@
 
 
                     <div class="card-header d-flex justify-content-between align-items-center">
-                      
+
 
                         <h5 class="mb-0">شجرة الحسابات </h5>
                     </div>
@@ -233,39 +233,33 @@
 
                 </div>
             </div>
-            <!-- Basic with Icons -->
+            <!-- END Basic with Icons -->
+
             <div class="col-xxl">
-                    <partial name="_CreateAccountPartial" model="Model.accounts" />
-                  
-   
+                <partial name="_CreateAccountPartial" model="Model.accounts" />
             </div>
         </div>
-          <div id="save-result" class="mt-3"></div>
-
-
-
-
-
-
-
-
-
-
+        <div id="save-result" class="mt-3"></div>
 
         <!-- ============================================= -->
         <!-- 4. جدول الحسابات -->
         <!-- ============================================= -->
         <div class="card">
             <div class="card-datatable table-responsive pt-0">
-                <table class="datatables-basic table table-bordered">
-                    <thead>
+                <table class="table table-bordered table-striped table-hover align-middle " data-datatable
+                       data-custom-buttons='[
+         {"text":"فتح مودال","action":"modal","target":"#myModal","class":"btn btn-outline-primary"},
+         {"text":"جلب بيانات","action":"url","url":"/api/data","onSuccessMessage":"تم الاسترجاع!","onErrorMessage":"فشل الطلب"},
+         {"text":"تشغيل دالة","action":"function","name":"myCustomHandler","class":"btn btn-success"}
+       ]'>
+                    <thead class="table-dark text-center">
                         <tr>
-                            <th>رقم الحساب</th>
-                            <th>اسم الحساب</th>
-                            <th>حساب الأب</th>
-                            <th>نوع الحساب</th>
-                            <th>الحساب الختامي</th>
-                            <th>الإجراءات</th>
+                            <th scope="col">رقم الحساب</th>
+                            <th scope="col">اسم الحساب</th>
+                            <th scope="col">حساب الأب</th>
+                            <th scope="col">نوع الحساب</th>
+                            <th scope="col">الحساب الختامي</th>
+                            <th scope="col">الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -274,50 +268,49 @@
                             @foreach (var account in Model.accounts)
                             {
                                 <tr data-account-id="@account.AccountNumber">
-                                    <td>@account.AccountNumber</td>
+                                    <td class="text-center">@account.AccountNumber</td>
                                     <td>@account.AccountName</td>
-                                    <td>@account.FatherNumber</td>
-                                    <td>
+                                    <td class="text-center">@account.FatherNumber</td>
+                                    <td class="text-center">
                                         @if (account.AccountType == "رئيسي")
                                         {
-                                            <span class="badge bg-label-success rounded p-2">رئيسي</span>
+                                            <span class="badge bg-success">رئيسي</span>
                                         }
                                         else
                                         {
-                                            <span class="badge bg-label-danger rounded p-2">فرعي</span>
+                                            <span class="badge bg-danger">فرعي</span>
                                         }
                                     </td>
-                                    <td>@account.AccountReference</td>
-                                    <td>
-                                        <div class="d-inline-block">
-                                            <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                    <td class="text-center">@account.AccountReference</td>
+                                    <td class="text-center">
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                الإجراءات
                                             </button>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a data-bs-toggle="modal"
-                                                   data-bs-target="#referAndEarn"
-                                                   data-invoice-id="@account.ID"
-                                                   href="#"
-                                                   class="dropdown-item details-record">
-                                                    <i class="menu-icon tf-icons bx bx-spreadsheet"></i> تفاصيل
-                                                </a>
-                                                <a href="javascript:;"
-                                                   hx-get="/Accounts?handler=EditAccount"
-                                                   hx-target="#form-container"
-                                                   hx-swap="outerHTML"
-                                                   hx-vals='{"accountNumber":"@account.AccountNumber"}'
-                                                   class="dropdown-item text-info ">
-                                                    <i class="bx bx-edit"></i> تعديل
-                                                </a>
-                                               
-                                                <div class="dropdown-divider"></div>
-                                                <a href="javascript:;"
-                                                   onclick="confirmDelete(@account.AccountNumber, this)"
-                                                   data-account-id="@account.AccountNumber"
-                                                   class="dropdown-item text-danger delete-record">
-                                                    <i class="bx bx-trash"></i> حذف
-                                                </a>
-                                            </div>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li>
+                                                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#referAndEarn" data-invoice-id="@account.ID" href="#">
+                                                        <i class="bx bx-spreadsheet"></i> تفاصيل
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item text-info" href="javascript:;"
+                                                       hx-get="/Accounts?handler=EditAccount"
+                                                       hx-target="#form-container"
+                                                       hx-swap="outerHTML"
+                                                       hx-vals='{"accountNumber":"@account.AccountNumber"}'>
+                                                        <i class="bx bx-edit"></i> تعديل
+                                                    </a>
+                                                </li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li>
+                                                    <a class="dropdown-item text-danger delete-record" href="javascript:;"
+                                                    
+                                                       data-account-id="@account.AccountNumber">
+                                                        <i class="bx bx-trash"></i> حذف
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </td>
                                 </tr>
@@ -326,14 +319,26 @@
                         else
                         {
                             <tr>
-                                <td colspan="6" class="text-center">لا توجد حسابات لعرضها</td>
+                                <td colspan="6" class="text-center text-muted">لا توجد حسابات لعرضها</td>
                             </tr>
                         }
                     </tbody>
                 </table>
+
             </div>
         </div>
 
+    </div>
+
+    <!-- مودال تجريبي -->
+    <div class="modal fade" id="myModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h5 class="modal-title">مودال مخصص</h5></div>
+                <div class="modal-body">تم فتح المودال بالزر المخصص 🎉</div>
+                <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button></div>
+            </div>
+        </div>
     </div>
 
     <!-- ============================================= -->
@@ -352,8 +357,29 @@
     <!-- jstree JS -->
     <script src="../assets/vendor/libs/jstree/jstree.js"></script>
 
+
+    <!-- ملف التهيئة العام -->
+    <script src="../js/init.js"></script>
+
     <!-- ملف JavaScript الخاص بالصفحة  -->
     <script src="../js/Accounts.js"></script>
+    <script>
+        // دالة مخصصة من نوع "function"
+        function myCustomHandler($tableEl, dataTableApi) {
+            alert("تم تشغيل الدالة المخصصة 🚀");
+            console.log("Table element:", $tableEl);
+            console.log("DataTable API:", dataTableApi);
+        }
+        $("#switchLang").on("click", function () {
+            let el = document.getElementById("Currency");
 
- 
+            // تغيير placeholder عبر data attribute
+            $(el).data("placeholder", "Select Currency");
+
+            // إعادة التهيئة
+            reInitComponent(el, "select2");
+        });
+
+    </script>
+
 }

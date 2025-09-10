@@ -27,7 +27,7 @@
             <div class="row g-3">
                 <div class="col-md">
                     <label class="form-label">حساب الأب</label>
-                    <select class="select2 form-select" data-allow-clear="true" name="FatherNumber" id="FatherNumber" required>
+                    <select class="form-select" select2 data-placeholder="اختر نوع الحساب" data-allow-clear="true" name="FatherNumber" id="FatherNumber" required>
                         @foreach (var account in fatherAccountList.Where(a => a.AccountType == "رئيسي" && a.AccountNumber != "9"))
                         {
                             <option value="@account.AccountNumber" selected="@(account.AccountNumber == accountToEdit.FatherNumber)">
@@ -41,7 +41,7 @@
                     <input type="hidden" name="AccountNumber" value="@accountToEdit.AccountNumber" />
                 <div class="col-md-6">
                     <label class="form-label">اسم الحساب</label>
-                    <input type="text" id="AccountName" name="AccountName" value="@accountToEdit.AccountName" class="form-control" placeholder="اسم الحساب" required />
+                    <input data-bs-toggle="tooltip" title="AccountName" type="text" id="AccountName" name="AccountName" value="@accountToEdit.AccountName" class="form-control" placeholder="اسم الحساب" required />
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">الاسم الإنجليزي</label>
@@ -50,7 +50,7 @@
 
                 <div class="col-md-6">
                     <label class="form-label">نوع الحساب</label>
-                    <select class="select2 form-select" data-allow-clear="true" id="AccountType" name="AccountType" required>
+                    <select class="form-select" select2 data-placeholder="اختر نوع الحساب" data-allow-clear="true" id="AccountType" name="AccountType" required>
                         <option value="رئيسي" selected="@(accountToEdit.AccountType == "رئيسي"? "selected" : null)">رئيسي</option>
                         <option value="فرعي" selected="@(accountToEdit.AccountType == "فرعي"  ? "selected" : null)">فرعي</option>
 
@@ -59,7 +59,7 @@
 
                 <div class="col-md-6">
                     <label class="form-label">الحساب الختامي</label>
-                    <select class="select2 form-select" data-allow-clear="true" id="AccountReference" name="AccountReference" required>
+                    <select class="form-select" select2 data-placeholder="اختر الحساب الختامي" data-allow-clear="true" id="AccountReference" name="AccountReference" required>
                         <option value="الارباح والخسائر" selected="@(accountToEdit.AccountReference == "الارباح والخسائر" ? "selected" : null)">الارباح والخسائر</option>
                         <option value="الميزانية العمومية" selected="@(accountToEdit.AccountReference == "الميزانية العمومية" ? "selected" : null)">الميزانية العمومية</option>
 

@@ -55,8 +55,9 @@ $(document).ready(function () {
     // 2. حذف الفاتورة باستخدام SweetAlert و Ajax
     // =============================================
     $('.delete-record').on('click', function () {
-        var accountNumber = $(this).data('account-id');
+
         alert(accountNumber);
+        var accountNumber = $(this).data('account-id');
         const antiForgeryToken = $("input[name='__RequestVerificationToken']").val();
 
         if (!accountNumber) {
@@ -104,61 +105,7 @@ $(document).ready(function () {
     });
 
 
-    // =============================================
-    // 3. تهيئة جدول البيانات (DataTable)
-    // =============================================
-    $('.datatables-basic').DataTable({
-        order: [[1, 'ASC']],
-        dom:
-            '<"row mx-2"' +
-            '<"col-md-2"<"me-3"l>>' +
-            '<"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"fB>>' +
-            '>t' +
-            '<"row mx-2"' +
-            '<"col-sm-12 col-md-6"i>' +
-            '<"col-sm-12 col-md-6"p>' +
-            '>',
-        language: {
-            sLengthMenu: '_MENU_',
-            search: '',
-            searchPlaceholder: 'Search..'
-        },
-        buttons: [
-            {
-                extend: 'collection',
-                className: 'btn btn-label-secondary dropdown-toggle mx-3',
-                text: '<i class="bx bx-upload me-2"></i>Export',
-                buttons: [
-                    {
-                        extend: 'print',
-                        text: '<i class="bx bx-printer me-2"></i>Print',
-                        className: 'dropdown-item'
-                    },
-                    {
-                        extend: 'csv',
-                        text: '<i class="bx bx-file me-2"></i>Csv',
-                        className: 'dropdown-item'
-                    },
-                    {
-                        extend: 'excel',
-                        text: 'Excel',
-                        className: 'dropdown-item'
-                    },
-                    {
-                        extend: 'pdf',
-                        text: '<i class="bx bxs-file-pdf me-2"></i>Pdf',
-                        className: 'dropdown-item'
-                    },
-                    {
-                        extend: 'copy',
-                        text: '<i class="bx bx-copy me-2"></i>Copy',
-                        className: 'dropdown-item'
-                    }
-                ]
-            }
-        ],
-        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "الكل"]]
-    });
+
 
 });
 // =============================================
@@ -286,46 +233,11 @@ document.body.addEventListener("htmx:afterRequest", function (evt) {
     }
 });
 
+// التمرير لأعلى بعد تحديث النموذج
+document.body.addEventListener("htmx:afterSwap", function (evt) {
+    if (evt.target.id === "form-container") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 
-//// =============================================
-//// 4. توليد رقم حساب جديد عند اختيار الحساب الأب ونوع الحساب
-//// =============================================
-//$('#FatherNumber, #AccountType').on('change', function () {
-//    var fatherNumber = $('#FatherNumber').val();
-//    var accountType = $('#AccountType').val();
+});
 
-//    // لا نولد رقمًا إذا لم يُختر الأب أو النوع
-//    if (!fatherNumber || !accountType) {
-//        return;
-//    }
-
-//    // إرسال طلب AJAX لتوليد رقم الحساب
-//    $.ajax({
-//        url: '/Accounts?handler=GenerateAccountNumber', // سننشئ هذا Handler
-//        method: 'GET',
-//        data: {
-//            fatherNumber: fatherNumber,
-//            accountType: accountType,
-//            __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val()
-//        },
-//        beforeSend: function () {
-//            // اختياري: عرض رسالة تحميل
-//            $('#AccountNumber').prop('disabled', true).val('جاري التوليد...');
-//        },
-//        success: function (response) {
-//            if (response.success && response.accountNumber) {
-//                $('#AccountNumber').val(response.accountNumber);
-//            } else {
-//                Swal.fire('تنبيه', response.message || 'فشل توليد رقم الحساب', 'warning');
-//                $('#AccountNumber').val('');
-//            }
-//        },
-//        error: function () {
-//            Swal.fire('خطأ', 'حدث خطأ أثناء توليد رقم الحساب.', 'error');
-//            $('#AccountNumber').val('');
-//        },
-//        complete: function () {
-//            $('#AccountNumber').prop('disabled', false);
-//        }
-//    });
-//});

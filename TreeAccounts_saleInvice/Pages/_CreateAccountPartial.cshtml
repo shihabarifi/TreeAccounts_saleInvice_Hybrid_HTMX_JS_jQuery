@@ -14,7 +14,9 @@
         <div class="row g-3">
             <div class="col-md">
                 <label class="form-label">حساب الأب</label>
-                <select class="select2 form-select" data-allow-clear="true" name="FatherNumber" id="FatherNumber" required>
+                    <select class ="form-control"
+                                 select2 data-placeholder="اختر حساب الأب" data-allow-clear="true" name="FatherNumber" id="FatherNumber" required>
+                        <option></option>
                         @foreach (var account in Model.Where(a => a.AccountType == "رئيسي" && a.AccountNumber != "9"))
                     {
                         <option value="@account.AccountNumber">@account.AccountName (@account.AccountNumber)</option>
@@ -42,8 +44,9 @@
 
             <div class="col-md-6">
                 <label class="form-label">نوع الحساب</label>
-                <select class="select2 form-select" data-allow-clear="true" id="AccountType" name="AccountType" required>
-                    <option value="رئيسي">رئيسي</option>
+                    <select class="form-select" select2 data-placeholder="اختر نوع الحساب" data-allow-clear="true" id="AccountType" name="AccountType" required>
+                
+                        <option value="رئيسي">رئيسي</option>
                     <option value="فرعي">فرعي</option>
 
                 </select>
@@ -52,8 +55,9 @@
 
             <div class="col-md-6">
                 <label class="form-label">الحساب الختامي</label>
-                <select class="select2 form-select" data-allow-clear="true" id="AccountReference" name="AccountReference" required>
-                    <option value="الارباح والخسائر">الارباح والخسائر</option>
+                    <select class="form-select" select2 data-placeholder="اختر الحساب الختامي" data-allow-clear="true" id="AccountReference" name="AccountReference" required>
+                       
+                        <option value="الارباح والخسائر">الارباح والخسائر</option>
                     <option value="الميزانية العمومية">الميزانية العمومية</option>
 
                 </select>
