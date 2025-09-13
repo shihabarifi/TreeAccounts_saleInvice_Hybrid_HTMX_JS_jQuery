@@ -3,6 +3,9 @@
  */
 
 'use strict';
+// Fix for missing variables in Frest Template
+window.isDarkStyle = window.isDarkStyle || false;
+window.isRtl = window.isRtl || false;
 
 let isRtl = window.Helpers.isRtl(),
   isDarkStyle = window.Helpers.isDarkStyle(),

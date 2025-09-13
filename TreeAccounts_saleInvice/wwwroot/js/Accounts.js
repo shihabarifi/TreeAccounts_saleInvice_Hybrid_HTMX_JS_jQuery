@@ -56,8 +56,8 @@ $(document).ready(function () {
     // =============================================
     $('.delete-record').on('click', function () {
 
-        alert(accountNumber);
         var accountNumber = $(this).data('account-id');
+        alert(accountNumber);
         const antiForgeryToken = $("input[name='__RequestVerificationToken']").val();
 
         if (!accountNumber) {

@@ -236,7 +236,7 @@
             <!-- END Basic with Icons -->
 
             <div class="col-xxl">
-                <partial name="_CreateAccountPartial" model="Model.accounts" />
+                <partial name="_CreateAccountPartial" model="Model.Accounts" />
             </div>
         </div>
         <div id="save-result" class="mt-3"></div>
@@ -246,12 +246,14 @@
         <!-- ============================================= -->
         <div class="card">
             <div class="card-datatable table-responsive pt-0">
-                <table class="table table-bordered table-striped table-hover align-middle " data-datatable
+                <table class="table table-bordered table-striped table-hover align-middle" data-datatable
                        data-custom-buttons='[
-         {"text":"فتح مودال","action":"modal","target":"#myModal","class":"btn btn-outline-primary"},
-         {"text":"جلب بيانات","action":"url","url":"/api/data","onSuccessMessage":"تم الاسترجاع!","onErrorMessage":"فشل الطلب"},
-         {"text":"تشغيل دالة","action":"function","name":"myCustomHandler","class":"btn btn-success"}
+         { "text": "➕ إضافة", "class": "btn btn-success", "action": "modal", "target": "#addAccountModal" },
+         { "text": "🔄 تحديث", "class": "btn btn-info", "action": "function", "name": "refreshAccounts" },
+         { "text": "📡 API", "class": "btn btn-warning", "action": "url", "url": "/api/sync", "method": "POST", "onSuccessMessage": "تم المزامنة بنجاح!" }
        ]'>
+            
+
                     <thead class="table-dark text-center">
                         <tr>
                             <th scope="col">رقم الحساب</th>
@@ -263,9 +265,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Model.accounts != null && Model.accounts.Any())
+                        @if (Model.Accounts != null && Model.Accounts.Any())
                         {
-                            @foreach (var account in Model.accounts)
+                            @foreach (var account in Model.Accounts)
                             {
                                 <tr data-account-id="@account.AccountNumber">
                                     <td class="text-center">@account.AccountNumber</td>
@@ -331,6 +333,15 @@
     </div>
 
     <!-- مودال تجريبي -->
+    <!-- مثال Modal -->
+    <div class="modal fade" id="addAccountModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h5>إضافة حساب</h5></div>
+                <div class="modal-body">محتوى...</div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="myModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -359,27 +370,11 @@
 
 
     <!-- ملف التهيئة العام -->
-    <script src="../js/init.js"></script>
-
+    @* <script src="../js/init.js"></script> *@
+    <!-- ملف التهيئة العام -->
+    @* <script src="../js/main.js"></script> *@
     <!-- ملف JavaScript الخاص بالصفحة  -->
     <script src="../js/Accounts.js"></script>
-    <script>
-        // دالة مخصصة من نوع "function"
-        function myCustomHandler($tableEl, dataTableApi) {
-            alert("تم تشغيل الدالة المخصصة 🚀");
-            console.log("Table element:", $tableEl);
-            console.log("DataTable API:", dataTableApi);
-        }
-        $("#switchLang").on("click", function () {
-            let el = document.getElementById("Currency");
 
-            // تغيير placeholder عبر data attribute
-            $(el).data("placeholder", "Select Currency");
-
-            // إعادة التهيئة
-            reInitComponent(el, "select2");
-        });
-
-    </script>
 
 }

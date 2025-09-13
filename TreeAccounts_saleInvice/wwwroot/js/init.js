@@ -65,7 +65,6 @@ function initTooltips(context = document) {
 }
 
 // ==================== DataTables (مرن مع custom buttons) ====================
-
 function setupDataTable(el) {
     if ($.fn.DataTable.isDataTable(el)) $(el).DataTable().destroy();
     const $el = $(el);

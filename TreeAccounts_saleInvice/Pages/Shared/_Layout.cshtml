@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 
 <html lang="en"
       class="light-style layout-navbar-fixed layout-menu-fixed"
@@ -8,6 +11,8 @@
       data-template="vertical-menu-template">
 <head>
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="@Antiforgery.GetAndStoreTokens(HttpContextAccessor.HttpContext).RequestToken" />
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
@@ -159,23 +164,34 @@
     <script src="../assets/vendor/libs/datatables-buttons/buttons.print.js"></script>
 
     <script src="../assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
-    <script src="../assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
+    @* <script src="../assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script> *@
 
     <!-- Page JS -->
-    @* <script src="../assets/js/forms-selects.js"></script> *@
-    <script src="../js/init.js"></script>
+ 
+    @* <script src="../js/init.js"></script> *@
+    <!-- ملف التهيئة العام -->
+    @* <script src="../js/main.js"></script> *@
+    <script src="../js/AppInit.js"></script>
+  @*   <script>
+        AppUI.init({
+            permittedOrigins: [window.location.origin]
+        });
+    </script> *@
     <script src="../assets/js/forms-typeahead.js"></script>
     <script src="../assets/js/extended-ui-sweetalert2.js"></script>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 
-    <script>
+   <script>
+        AppInit.initComponents();
+
+       @*  
         document.body.addEventListener('htmx:configRequest', (event) => {
             const tokenInput = document.querySelector('input[name="__RequestVerificationToken"]');
             if (tokenInput) {
                 event.detail.headers['RequestVerificationToken'] = tokenInput.value;
             }
-        });
-    </script>
+        });*@
+    </script> 
     @RenderSection("Scripts", required: false)
 </body>
 </html>
